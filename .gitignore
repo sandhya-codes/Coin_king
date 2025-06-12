@@ -6,4 +6,4 @@ node_modules/
 *.db
 dist/
 coverage/
-backend/
+
