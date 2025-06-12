@@ -1,0 +1,594 @@
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .wallet {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background: #FFD700;
+            color: #000;
+            font-weight: bold;
+            padding: 12px 15px;
+            border-radius: 25px;
+            box-shadow: 0 0 12px #FFD700;
+            font-size: 15px;
+            z-index: 1000;
+            transition: 0.3s ease;
+            height: auto;
+            line-height: 1.2;
+        }
+        .wallet.win { background: #00c897; color: #fff; box-shadow: 0 0 12px #00c897; }
+        .wallet.lose { background: #ff4444; color: #fff; box-shadow: 0 0 12px #ff4444; }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 60px;
+            flex-direction: column;
+        }
+        .game-box {
+            background: #1f1f1f;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px #000;
+            text-align: center;
+            width: 360px;
+            max-width: 95%;
+        }
+        .coin {
+            width: 120px;
+            height: 120px;
+            margin: 20px auto;
+            perspective: 1000px;
+        }
+
+        .coin-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .spin {
+            animation: rotateCoin 5s linear;
+        }
+
+        @keyframes rotateCoin {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(7200deg); }
+        }
+
+        .side {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            box-shadow: 0 0 12px #FFD700;
+            color: #000;
+        }
+
+        .king { transform: rotateY(0deg); }
+        .queen { transform: rotateY(180deg); }
+
+        .controls {
+            margin-top: 20px;
+        }
+
+        .bet-controls button {
+            padding: 10px;
+            width: 40px;
+            font-size: 20px;
+            font-weight: bold;
+            background: #FFD700;
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            margin: 0 8px;
+            cursor: pointer;
+        }
+
+        #bet {
+            background: #fff;
+            color: #000;
+            font-size: 18px;
+            font-weight: bold;
+            width: 100px;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .side-btn {
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .side-btn.selected {
+            background-color: #FFD700;
+            color: #000;
+        }
+
+        .start-btn {
+            background-color: #00c897;
+            color: #fff;
+            width: 200px;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        #result {
+            margin-top: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #FFD700;
+            display: none;
+        }
+
+        #cooldown {
+            margin-top: 10px;
+            color: #FF6347;
+            font-weight: bold;
+        }
+
+        .history {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .history ul {
+            padding-left: 20px;
+            list-style: none;
+        }
+
+        .history li.win { color: #00ff99; }
+        .history li.lose { color: #ff6666; }
+
+        .section {
+            padding: 20px;
+            width: 100%;
+        }
+        .section-container {
+            font-size:15px;
+            background-color: #151515;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            text-align:left;
+            padding: 8px;
+        }
+
+        th {
+            background-color:rgb(45, 37, 37);
+        }
+        .section-container input[type="number"],
+        .section-container input[type="text"],
+        .section-container input[type="file"] {
+            width: calc(100% - 24px); /* Adjust for padding and border */
+            padding: 10px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #555; /* Darker, softer border */
+            border-radius: 6px; /* More rounded corners */
+            box-sizing: border-box;
+            background-color: #222; /* Deeper background */
+            color: #eee; /* Lighter text */
+            font-size: 0.95em;
+        }
+
+        .section-container input:focus {
+            outline: none;
+            border-color: #00bfa5; /* Accent color on focus */
+            box-shadow: 0 0 5px rgba(0, 191, 165, 0.5); /* Subtle glow on focus */
+        }
+
+        .section-container button {
+            background-color: #2e7d32; /* Pleasant green */
+            color: #f0f8ea; /* Light, contrasting text */
+            padding: 12px 18px; /* Slightly larger padding */
+            border: none;
+            border-radius: 6px; /* More rounded corners */
+            cursor: pointer;
+            width: 100%;
+            margin-top: 12px; /* Increased margin */
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        }
+
+        .section-container button:hover {
+            background-color: #1b5e20; /* Darker shade on hover */
+            transform: scale(1.02); /* Gentle scale on hover */
+        }
+
+        .section-container label {
+            display: block;
+            margin-top: 15px; /* Increased margin */
+            margin-bottom: 6px;
+            color: #b0bec5; /* Softer label color */
+            text-align: left;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        #addBalanceSuccessMessage,
+        #addBalanceErrorMessage { /* Combined styles for success/error messages */
+            text-align: center;
+            margin-top: 15px;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.95em;
+            display: none; /* Initially hidden - show with JavaScript */
+        }
+
+        #addBalanceSuccessMessage {
+            background-color: rgba(76, 175, 80, 0.15); /* Light green */
+            color: #2e7d32; /* Darker pleasant green text */
+            border: 1px solid #4caf50; /* Green border */
+        }
+
+        #addBalanceErrorMessage {
+            background-color: rgba(255, 69, 0, 0.15); /* Light orange-red */
+            color: #d32f2f; /* Darker red text */
+            border: 1px solid #ff4500; /* Orange-red border */
+        }
+
+        #withdrawSuccessMessage,
+        #popupMessageWithdraw,
+        #withdrawErrorMessage { /* Added withdrawErrorMessage */
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.9em;
+            display: none; /* Initially hidden */
+        }
+
+        #withdrawSuccessMessage {
+            background-color: rgba(76, 175, 80, 0.15); /* Light green */
+            color: #4caf50;
+            border: 1px solid #4caf50;
+        }
+
+        #popupMessageWithdraw {
+            background-color: rgba(255, 167, 38, 0.15); /* Light amber */
+            color: #ff9800;
+            border: 1px solid #ff9800;
+        }
+
+        #withdrawErrorMessage { /* New style for withdraw errors */
+            background-color: rgba(255, 69, 0, 0.15);
+            color: #d32f2f;
+            border: 1px solid #ff4500;
+        }
+
+
+        .detail-row td {
+            font-size: 0.9em;
+            background-color: #1c1c1c; /* Slightly darker background */
+            color: #90a4ae; /* Softer text color */
+            padding: 10px;
+        }
+
+        /* Attractive and Pleasant Menu Details Styles */
+        .offcanvas-header {
+            background-color: #37474f; /* Cool grey header */
+            border-bottom: 1px solid #546e7a;
+            padding: 18px;
+        }
+
+        .offcanvas-title {
+            color: #eceff1 !important; /* Very light grey title */
+            font-size: 1.4em;
+            font-weight: bold;
+            letter-spacing: 0.7px;
+        }
+
+        .offcanvas-body {
+            padding: 25px;
+            background-color: #263238; /* Darker, pleasant background */
+        }
+
+        .offcanvas-body .navbar-nav {
+            margin-bottom: 20px;
+        }
+
+        .offcanvas-body .navbar-nav .nav-item {
+            margin-bottom: 10px;
+        }
+
+        .offcanvas-body .navbar-nav .nav-link {
+            color: #b0bec5 !important; /* Soft blue-grey link color */
+            padding: 12px 18px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .offcanvas-body .navbar-nav .nav-link:hover {
+            background-color: #455a64; /* Slightly lighter grey on hover */
+            color: #fff !important;
+        }
+
+        .offcanvas-body .navbar-nav details {
+            background-color: #37474f; /* Cool grey background for details */
+            border-radius: 8px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            border: 1px solid #546e7a; /* Subtle border */
+        }
+
+        .offcanvas-body .navbar-nav summary {
+            color: #cfd8dc !important; /* Light grey summary text */
+            padding: 14px 20px;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: bold;
+        }
+
+        .offcanvas-body .navbar-nav summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .offcanvas-body .navbar-nav summary::after {
+            content: '▾'; /* Down arrow for open/close */
+            font-size: 1em;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .offcanvas-body .navbar-nav details[open] > summary::after {
+            transform: rotate(180deg);
+        }
+
+        .offcanvas-body .navbar-nav summary:hover {
+            background-color: #455a64;
+            color: #fff !important;
+        }
+
+        .offcanvas-body .navbar-nav .section-container {
+            background-color: #455a64; /* Slightly lighter grey for section content */
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .offcanvas-body .navbar-nav .section-container h3 {
+            color: #eceff1;
+            font-size: 1.3em;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #546e7a;
+            padding-bottom: 8px;
+        }
+
+        .offcanvas-body .navbar-nav .section-container p,
+        .offcanvas-body .navbar-nav .section-container strong,
+        .offcanvas-body .navbar-nav .section-container label {
+            color: #b0bec5;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .offcanvas-body .navbar-nav .section-container input[type="number"],
+        .offcanvas-body .navbar-nav .section-container input[type="text"],
+        .offcanvas-body .navbar-nav .section-container input[type="file"] {
+            background-color: #37474f;
+            border: 1px solid #546e7a;
+            color: #eceff1;
+            border-radius: 6px;
+            padding: 10px;
+            margin: 8px 0;
+            font-size: 0.9em;
+        }
+
+        .offcanvas-body .navbar-nav .section-container input:focus {
+            outline: none;
+            border-color: #00bfa5;
+            box-shadow: 0 0 5px rgba(0, 191, 165, 0.5);
+        }
+
+        .offcanvas-body .navbar-nav .section-container button {
+            background-color: #2e7d32; /* Pleasant green */
+            color: #f0f8ea;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 18px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 12px;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .offcanvas-body .navbar-nav .section-container button:hover {
+            background-color: #1b5e20;
+            transform: scale(1.02);
+        }
+
+        .offcanvas-body .navbar-nav #searchInput {
+            background-color: #37474f;
+            border: 1px solid #546e7a;
+            color: #eceff1;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+
+        .offcanvas-body button { /* Logout button style */
+            background-color: #d32f2f; /* Pleasant red */
+            color: #ffebee;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 18px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 18px;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .offcanvas-body button:hover {
+            background-color: #b71c1c; /* Darker red on hover */
+            transform: scale(1.02);
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+        }
+
+        th,
+        td {
+            border: 1px solid #455a64;
+            text-align: left;
+            padding: 12px 15px;
+            font-size: 0.9em;
+        }
+
+        th {
+            background-color: #37474f;
+            color: #eceff1;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #263238;
+        }
+
+        .detail-row td {
+            background-color: #1c1c1c;
+            color: #90a4ae;
+        }
+
+        .table-wrapper-horizontal {
+            overflow-x: auto; /* Enable horizontal scrollbar when content overflows */
+            margin-top: 10px; /* Add some space above the table */
+            border: 1px solid #555; /* Optional: Add a border to the scrollable area */
+            border-radius: 8px;
+        }
+
+        .horizontal-table {
+            width: auto; /* Important: Let the table width expand based on content */
+            border-collapse: collapse;
+            margin-bottom: 10px; /* Add some space below the table */
+        }
+
+        .horizontal-table th,
+        .horizontal-table td {
+            border: 1px solid #455a64; /* Use your theme's border color */
+            text-align: left;
+            padding: 12px 15px;
+            white-space: nowrap; /* Prevent text wrapping, forcing horizontal overflow */
+            font-size: 0.9em;
+        }
+
+        .horizontal-table th {
+            background-color: #37474f; /* Use your theme's header background */
+            color: #eceff1; /* Use your theme's header text color */
+            font-weight: bold;
+        }
+
+        .horizontal-table tr:nth-child(even) {
+            background-color: #263238; /* Use your theme's even row background */
+        }
+
+        /* Optional: Style the scrollbar for WebKit browsers (Chrome, Safari) */
+        .table-wrapper-horizontal::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .table-wrapper-horizontal::-webkit-scrollbar-thumb {
+            background-color: #666;
+            border-radius: 4px;
+        }
+
+        .table-wrapper-horizontal::-webkit-scrollbar-thumb:hover {
+            background-color: #888;
+        }
+
+        /* Optional: Style the scrollbar for Firefox */
+        .table-wrapper-horizontal {
+            scrollbar-width: thin;
+            scrollbar-color: #666 #333;
+        }
+
+        /* NEW: Styles for the in-page "Balance Added" popup */
+        #balanceAddedOnPagePopup {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stays in place relative to the viewport */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Centers the popup */
+            background-color: rgba(33, 150, 243, 0.95); /* A slightly darker blue with more opacity */
+            color: #fff;
+            padding: 25px 35px; /* More generous padding */
+            border-radius: 12px; /* More rounded corners */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Stronger shadow */
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em; /* Slightly larger text */
+            z-index: 2000; /* Higher than offcanvas */
+            max-width: 350px; /* Max width for responsiveness */
+            animation: fadeIn 0.3s ease-out; /* Smooth fade-in */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -60%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        #balanceAddedOnPagePopup.hidden {
+            animation: fadeOut 0.5s ease-out forwards; /* Smooth fade-out */
+        }
+  

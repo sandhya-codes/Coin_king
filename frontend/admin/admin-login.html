@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login - Coin King</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #222;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #333;
+      padding: 30px;
+      border-radius: 10px;
+      width: 350px;
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Admin Login</h2>
+    <form id="adminLoginForm">
+      <input type="email" id="adminEmail" placeholder="Admin Email" required>
+      <input type="password" id="adminPassword" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+    <div id="message" class="error"></div>
+  </div>
+
+  <script >
+    document.getElementById("adminLoginForm").addEventListener("submit", async e => {
+      e.preventDefault();
+
+      const email = document.getElementById("adminEmail").value;
+      const password = document.getElementById("adminPassword").value;
+      const messageBox = document.getElementById("message");
+
+      if (email === "admin@gmail.com" && password === "admin123") {
+        window.location.href = "admin-dashboard.html";
+      } else {
+        messageBox.textContent = "Invalid admin credentials.";
+      }
+    });
+  </script>
+</body>
+</html>

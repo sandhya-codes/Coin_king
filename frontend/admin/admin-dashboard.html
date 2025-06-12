@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard - Coin King</title>
+   <link rel="stylesheet" href="./adminstyle.css">
+</head>
+<body>
+  <h1>👑 Admin Dashboard</h1>
+
+  <div class="dashboard">
+    <div style="text-align:center; margin-bottom:20px;">
+      <button onclick="showSection('userSection')">User Details</button>
+      <button onclick="showSection('transactionSection')">Transaction Details</button>
+      <button onclick="showSection('addBalanceSection')">Add Balance</button>
+      <button onclick="showSection('withdrawSection')">Withdraw Details</button>
+      <button onclick="showSection('gameResultsSection')">Game Results</button>
+    </div>
+
+    <div id="userSection" class="section" style="display:none;">
+      <h2>User Details</h2>
+      <table id="userTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div id="transactionSection" class="section" style="display:none;">
+      <h2>Transaction History</h2>
+      <table id="transactionTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Bet Side</th>
+            <th>Amount Bet</th>
+            <th>Result</th>
+            <th>Won Amount</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div id="addBalanceSection" class="section" style="display:none;">
+      <h2>Add Balance</h2>
+      <p>Feature coming soon...</p>
+    </div>
+
+    <div id="withdrawSection" class="section" style="display:none;">
+      <h2>Withdraw Requests</h2>
+      <p>Feature coming soon...</p>
+    </div>
+
+    <div id="gameResultsSection" class="section" style="display:none;">
+      <h2>Game Results</h2>
+      <p>Feature coming soon...</p>
+    </div>
+
+    <button onclick="logout()">Logout</button>
+  </div>
+    <script>
+    function showSection(id) {
+      // Hide all sections first
+      document.querySelectorAll(".section").forEach(div => div.style.display = "none");
+
+      const section = document.getElementById(id);
+      if (section) {
+        section.style.display = "block"; // Show the clicked section
+
+        // If the "User Details" section is clicked, load the user data
+        if (id === 'userSection') {
+          loadUsers();
+        } else if (id === 'transactionSection') {
+          loadTransactions();
+        }
+      } else {
+        console.error(`❌ Section with ID '${id}' not found.`);
+      }
+    }
+
+    function logout() {
+      window.location.href = "admin-login.html";
+    }
+
+    async function loadUsers() {
+      try {
+        const res = await fetch("http://localhost:4000/api/all-users");
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json();
+        const tbody = document.getElementById("userTable")?.querySelector("tbody");
+        if (tbody) {
+          tbody.innerHTML = ""; // Clear existing rows
+          data.forEach(user => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td>${user.id}</td>
+              <td>${user.username}</td>
+              <td>${user.email}</td>
+              <td>${user.phone}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
+      } catch (error) {
+        console.error("Failed to load users:", error);
+        alert("Failed to load user details. Please check the server connection.");
+      }
+    }
+
+    async function loadTransactions() {
+      try {
+        const res = await fetch("http://localhost:4000/api/all-transactions");
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json();
+        const tbody = document.getElementById("transactionTable")?.querySelector("tbody");
+        if (tbody) {
+          tbody.innerHTML = ""; // Clear existing rows
+          data.forEach(tx => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td>${tx.id}</td>
+              <td>${tx.username}</td>
+              <td>${tx.email}</td>
+              <td>${tx.bet_side}</td>
+              <td>${tx.bet_amount}</td>
+              <td>${tx.result}</td>
+              <td>${tx.won_amount}</td>
+              <td>${new Date(tx.created_at).toLocaleString()}</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
+      } catch (error) {
+        console.error("Failed to load transactions:", error);
+        alert("Failed to load transaction details. Please check the server connection.");
+      }
+    }
+
+    // Initial load when the dashboard loads (optional, depends on default view)
+    // You might want to automatically show the 'User Details' section and load users on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        showSection('userSection'); // Automatically show user section on load
+    });
+
+    </script>
+</body>
+</html>
